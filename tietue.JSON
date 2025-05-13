@@ -1,0 +1,15 @@
+{
+  "otsikko": "JSON-datan käsittelyä",
+  "kuva": "https://jaakkola.github.io/json/digi.JPG",
+  "sisalto": [
+    "low-code",
+    "sisällönhallintajärjestelmät",
+    "resposiivinen käyttöliittymä ja komponentit",
+    "tiedon haku julkisista palveluista rest-rajapinnan yli"
+  ],
+  "tekniikat": [
+    "HTML",
+    "CSS",
+    "JavaScript"
+  ]
+}
