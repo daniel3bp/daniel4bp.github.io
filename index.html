@@ -12,16 +12,17 @@
     <div class="container mt-5">
         <h1>JSON-datan esitys</h1>
         <div id="vastaus"></div>
+        <a href="toteutus.html" class="btn btn-primary mt-3">Siirry toteutuksen sivulle</a>
     </div>
 
     <script>
-        // Haetaan JSON-tiedosto ja käsitellään se
-        fetch('tietue.JSON')  // Muokkaa polku oikeaksi
+        // Haetaan toteutuksen tiedot
+        fetch('toteutus.json')  // Muokkaa polku oikeaksi
             .then(function(response) {
-                return response.json(); // Muutetaan vastaus JSON-olioksi
+                return response.json();  // Muutetaan vastaus JSON-olioksi
             })
             .then(function(responseJson) {
-                kerro(responseJson); // Kutsutaan funktiota, joka käsittelee tiedot
+                kerro(responseJson);  // Kutsutaan funktiota, joka käsittelee tiedot
             })
             .catch(function(error) {
                 document.getElementById("vastaus").innerHTML = "<p>Tietoa ei pystytä hakemaan</p>";
@@ -29,20 +30,14 @@
 
         // Funktio, joka käsittelee JSON-datan ja näyttää sen HTML:ssä
         function kerro(obj) {
-            let tiedot = "<h1>" + obj.otsikko + "</h1><br>" + obj.kuvaus + "<br><hr>";
-            tiedot += "<p><img src='" + obj.kuva + "' alt='Kurssikuva' style='width: 100%;'></p>";
+            let tiedot = "<h2>" + obj.toteutus.nimi + "</h2><br>";
+            tiedot += "<p><img src='" + obj.toteutus.kuva + "' alt='Toteutuskuva' style='width: 100%;'></p>";
+            tiedot += "Toteutuksen ajankohta: " + obj.toteutus.alkamisPvm + " - " + obj.toteutus.loppumisPvm + "<br>";
+            tiedot += "Kesto: " + obj.toteutus.kestoViikkoina + " viikkoa<br><hr>";
 
-            // Opintojakson tiedot
-            tiedot += "<h3>Opintojakso</h3>";
-            tiedot += "Nimi: " + obj.opintojakso.nimi + "<br>";
-            tiedot += "Tunnus: " + obj.opintojakso.tunnus + "<br>";
-            tiedot += "Opintopisteet: " + obj.opintojakso.opintopisteet + "<br><hr>";
-
-            // Aiheet ja linkit
-            tiedot += "<h3>Aiheet</h3><ul>";
-            for (var i = 0; i < obj.tekniikat.length; i++) {
-                tiedot += "<li><b>Aihe: " + obj.tekniikat[i].aihe + "</b> - ";
-                tiedot += "<a href='" + obj.tekniikat[i].linkki + "'>" + obj.tekniikat[i].linkki + "</a></li>";
+            tiedot += "<h3>Osallistujat</h3><ul>";
+            for (var i = 0; i < obj.toteutus.osallistujat.length; i++) {
+                tiedot += "<li>" + obj.toteutus.osallistujat[i] + "</li>";
             }
             tiedot += "</ul>";
 
