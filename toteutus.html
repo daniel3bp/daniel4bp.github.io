@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toteutus</title>
+    <title>Toteutus - Digitekniikat</title>
+    <!-- Linkitetään Bootstrap ja oma styles.css -->
     <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+    <!-- Navigointi -->
     <nav>
         <ul>
             <li><a href="index.html">Etusivu</a></li>
@@ -24,16 +26,22 @@
         fetch('toteutus.json')
             .then(response => response.json())
             .then(data => {
+                // Muodostetaan HTML tiedoista
                 let tiedot = `<h1>${data.toteutusNimi}</h1>`;
-                tiedot += `<p>Osallistujien lukumäärä: ${data.osallistujat.lukumäärä}</p>`;
+                tiedot += `<p><strong>Osallistujien lukumäärä:</strong> ${data.osallistujat.lukumäärä}</p>`;
                 tiedot += "<h3>Osallistujat:</h3><ul>";
+                
+                // Luodaan lista osallistujista
                 data.osallistujat.nimet.forEach(nimi => {
                     tiedot += `<li>${nimi}</li>`;
                 });
-                tiedot += `</ul><p><strong>Toteutuksen aika:</strong> ${data.alkamisAika} - ${data.loppumisAika}</p>`;
+                
+                tiedot += `</ul>`;
+                tiedot += `<p><strong>Toteutuksen aika:</strong> ${data.alkamisAika} - ${data.loppumisAika}</p>`;
                 tiedot += `<p><strong>Kesto:</strong> ${data.kestoViikoissa} viikkoa</p>`;
                 tiedot += `<img src="${data.kuva}" alt="Toteutuksen kuva">`;
-
+                
+                // Näytetään tiedot
                 document.getElementById('vastaus').innerHTML = tiedot;
             })
             .catch(error => {
