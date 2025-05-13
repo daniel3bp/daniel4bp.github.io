@@ -1,20 +1,28 @@
 {
   "otsikko": "JSON-datan käsittelyä",
-  "kuvaus": "Tässä kurssissa opitaan HTML:n perusteet ja web-sivujen rakentaminen.",
+  "kuvaus": "Tässä kurssissa käsitellään JSON-datan käsittelyä ja käyttöä web-sovelluksissa.",
   "kuva": "https://jaakkola.github.io/json/digi.JPG",
   "opintojakso": {
-    "nimi": "HTML ja CSS perusteet",
-    "tunnus": "WEB101",
+    "nimi": "Low-Code kehittäminen",
+    "tunnus": "WEB203",
     "opintopisteet": 5
   },
   "tekniikat": [
     {
-      "aihe": "HTML Perusteet",
-      "linkki": "https://www.w3schools.com/html/"
+      "aihe": "Low-code",
+      "linkki": "https://www.w3schools.com"
     },
     {
-      "aihe": "CSS Perusteet",
-      "linkki": "https://www.w3schools.com/css/"
+      "aihe": "Sisällönhallintajärjestelmät",
+      "linkki": "https://www.contentful.com"
+    },
+    {
+      "aihe": "Responsiivinen käyttöliittymä",
+      "linkki": "https://getbootstrap.com"
+    },
+    {
+      "aihe": "REST-rajapinta",
+      "linkki": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API"
     }
   ]
 }
