@@ -1,73 +1,96 @@
 <!DOCTYPE html>
 <html lang="fi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokemon Haku</title>
-
-    <!-- Linkitetään Bootstrap ja tyylitiedosto -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <title>Pokemon haku</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <!-- Navigaatio -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Kurssi JSON</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Etusivu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="toteutus.html">Toteutus</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="poke.html">Pokemon Haku</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Sisältö -->
-    <div class="container mt-4">
-        <h1>Pokemon Haku</h1>
-        <p>
-            <input type="text" id="pokemonName" class="form-control" placeholder="Enter Pokemon name">
-            <button onclick="poke()" class="btn btn-primary mt-2">Hae</button><br>
-        </p>
-        <div id="nimi" class="mt-3">Kirjoita laatikkoon Pokemonin nimi</div>
-        <div id="kuva2" class="mt-3"></div>
+  <!-- Navigaatio -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Etusivu</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="toteutus.html">Toteutus</a></li>
+          <li class="nav-item"><a class="nav-link active" href="poke.html">Poke-haku</a></li>
+        </ul>
+      </div>
     </div>
+  </nav>
 
-    <!-- Javascript, joka hakee Pokemonin tiedot -->
-    <script>
-        function poke() {
-            var pokemon = document.getElementById('pokemonName').value.toLowerCase();
+  <!-- Pääsisältö -->
+  <div class="container">
+    <h1 class="mb-3">Pokemon haku</h1>
+    <p>
+      <input type="text" id="pokemonName" placeholder="Kirjoita Pokemonin nimi">
+      <button class="btn btn-primary" onclick="poke()">Hae</button>
+    </p>
 
-            // Haetaan Pokemonin tiedot PokeAPI:sta
-            fetch('https://pokeapi.co/api/v2/pokemon/' + pokemon)
-                .then(response => response.json())
-                .then(data => {
-                    // Näytetään Pokemonin nimi ja kuva
-                    document.getElementById('nimi').innerHTML = 'Pokemon: ' + data.name.charAt(0).toUpperCase() + data.name.slice(1);
-                    document.getElementById('kuva2').innerHTML = '<img src="' + data.sprites.front_default + '" alt="' + data.name + '">';
-                })
-                .catch(error => {
-                    // Jos Pokemonia ei löydy, näytetään virhe
-                    document.getElementById('nimi').innerHTML = 'Pokemonia ei löytynyt!';
-                    document.getElementById('kuva2').innerHTML = '';
-                });
-        }
-    </script>
+    <div id="nimi" class="mb-3">Kirjoita laatikkoon Pokemonin nimi</div>
+    <p id="kuva2"></p>
+    <div id="ominaisuudet"></div>
+    <div id="kaannaBtnArea"></div>
+  </div>
 
-    <!-- Linkitetään Bootstrapin JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let currentPokemonData = null;
+
+    function poke() {
+      const name = document.getElementById("pokemonName").value.toLowerCase();
+      if (!name) return;
+
+      fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
+        .then(res => {
+          if (!res.ok) throw new Error("Ei löytynyt");
+          return res.json();
+        })
+        .then(data => {
+          currentPokemonData = data;
+
+          document.getElementById("nimi").innerHTML = "<strong>" + data.name.toUpperCase() + "</strong>";
+          document.getElementById("kuva2").innerHTML = `<img src="${data.sprites.front_default}" class="img-fluid" alt="Pokemon">`;
+
+          // Näytetään ominaisuuksia
+          document.getElementById("ominaisuudet").innerHTML = `
+            <p><strong>Paino:</strong> ${data.weight}</p>
+            <p><strong>Korkeus:</strong> ${data.height}</p>
+            <p><strong>Tyyppi:</strong> ${data.types.map(t => t.type.name).join(", ")}</p>
+          `;
+
+          // Lisää Käännä-painike
+          document.getElementById("kaannaBtnArea").innerHTML = `
+            <button class="btn btn-secondary mt-2" onclick="kaanna()">Käännä</button>
+          `;
+
+          // Tyhjennetään hakukenttä
+          document.getElementById("pokemonName").value = "";
+        })
+        .catch(error => {
+          document.getElementById("nimi").innerHTML = "<span class='text-danger'>Pokemonia ei löytynyt.</span>";
+          document.getElementById("kuva2").innerHTML = "";
+          document.getElementById("ominaisuudet").innerHTML = "";
+          document.getElementById("kaannaBtnArea").innerHTML = "";
+        });
+    }
+
+    function kaanna() {
+      if (currentPokemonData) {
+        document.getElementById("kuva2").innerHTML = `
+          <img src="${currentPokemonData.sprites.back_default}" class="img-fluid" alt="Pokemon takaapäin">
+        `;
+      }
+    }
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
