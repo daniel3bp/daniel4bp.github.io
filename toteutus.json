@@ -1,16 +1,11 @@
 {
-  "toteutus": {
-    "nimi": "Digitekniikat",
-    "osallistujat": [
-      "Mikko Mäkelä",
-      "Anna Virtanen",
-      "Pekka Lahtinen",
-      "Johanna Salonen",
-      "Kalle Korhonen"
-    ],
-    "alkamisPvm": "13.1.2025",
-    "loppumisPvm": "14.3.2025",
-    "kestoViikkoina": 8,
-    "kuva": "https://jaakkola.github.io/json/digi.JPG"
-  }
+  "toteutusNimi": "Digitekniikat",
+  "osallistujat": {
+    "lukumäärä": 5,
+    "nimet": ["Matti Meikäläinen", "Mikko Mallikas", "Kati Kivinen", "Laura Laitinen", "Pekka Pääkkönen"]
+  },
+  "alkamisAika": "13.1.2025",
+  "loppumisAika": "14.3.2025",
+  "kestoViikoissa": 8,
+  "kuva": "https://jaakkola.github.io/json/digi.JPG"
 }
