@@ -1,83 +1,71 @@
 <!DOCTYPE html>
 <html lang="fi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JSON-tietue</title>
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-  <!-- Oma tyylitiedosto -->
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <title>Kurssin tiedot</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-
-  <!-- Navigaatio -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Tietue</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link active" href="#">Etusivu</a></li>
-          <li class="nav-item"><a class="nav-link" href="tietue.JSON">JSON-tiedosto</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Pääsisältö -->
-  <div class="container mt-5">
-    <h1 id="otsikko"></h1>
-    <img id="kuva" src="" alt="Kuva JSON-datasta" class="img-fluid mb-4" />
-    
-    <h3>Sisältö</h3>
-    <ul id="sisalto" class="list-group mb-4"></ul>
-
-    <h3>Tekniikat</h3>
-    <ul id="tekniikat" class="list-group"></ul>
-
-    <div id="vastaus" class="mt-3 text-danger"></div> <!-- Virheilmoitus -->
+<body class="p-4">
+  <div class="container">
+    <h1 class="mb-4">Kurssin tiedot</h1>
+    <div id="vastaus">Ladataan tietoja...</div>
   </div>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- JSON:n käsittely -->
   <script>
-    fetch('tietue.JSON')
-      .then(function (response) {
+    fetch('tietue.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("JSON-tiedostoa ei löytynyt.");
+        }
         return response.json();
       })
-      .then(function (responseJson) {
-        kerro(responseJson);
-      })
-      .catch(function (error) {
-        document.getElementById("vastaus").innerHTML = "<p>Tietoa ei pystytä hakemaan</p>";
+      .then(data => kerro(data))
+      .catch(error => {
+        document.getElementById("vastaus").innerHTML = "<p class='text-danger'>Tietoa ei pystytä hakemaan.</p>";
+        console.error(error);
       });
 
-    function kerro(data) {
-      document.getElementById('otsikko').textContent = data.otsikko;
-      document.getElementById('kuva').src = data.kuva;
+    function kerro(obj) {
+      let tiedot = `
+        <h2>${obj.otsikko}</h2>
+        <p>${obj.kuvaus}</p>
+        <img src="${obj.kuva}" alt="Kurssikuva" class="img-fluid mb-3">
+        <hr>
 
-      const sisaltoEl = document.getElementById('sisalto');
-      data.sisalto.forEach(function(item) {
-        const li = document.createElement('li');
-        li.className = 'list-group-item';
-        li.textContent = item;
-        sisaltoEl.appendChild(li);
+        <h4>Opintojakso</h4>
+        <p>
+          Nimi: ${obj.opintojakso.nimi}<br>
+          Tunnus: ${obj.opintojakso.tunnus}<br>
+          Opintopisteet: ${obj.opintojakso.opintopisteet}
+        </p>
+
+        <h4>Aiheet</h4>
+      `;
+
+      obj.tekniikat.forEach(t => {
+        tiedot += `<p><b>${t.aihe}</b>: <a href="${t.linkki}" target="_blank">${t.linkki}</a></p>`;
       });
 
-      const tekniikatEl = document.getElementById('tekniikat');
-      data.tekniikat.forEach(function(item) {
-        const li = document.createElement('li');
-        li.className = 'list-group-item';
-        li.textContent = item;
-        tekniikatEl.appendChild(li);
+      tiedot += `
+        <hr>
+        <h4>Toteutus</h4>
+        <p>
+          Nimi: ${obj.toteutus.toteutuksenNimi}<br>
+          Aika: ${obj.toteutus.alkamisPvm} – ${obj.toteutus.loppumisPvm}<br>
+          Kesto: ${obj.toteutus.kestoViikoissa} viikkoa
+        </p>
+        <img src="${obj.toteutus.kuva}" alt="Toteutuskuva" class="img-fluid mb-3">
+
+        <h5>Osallistujat</h5>
+        <ul>
+      `;
+
+      obj.toteutus.osallistujat.forEach(hlo => {
+        tiedot += `<li>${hlo.nimi} (${hlo.rooli})</li>`;
       });
+
+      tiedot += "</ul>";
+      document.getElementById("vastaus").innerHTML = tiedot;
     }
   </script>
 </body>
