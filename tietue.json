@@ -1,34 +1,14 @@
 {
-  "otsikko": "Ohjelmointi HTML:llä",
-  "kuvaus": "Tässä kurssissa opitaan HTML:n perusteet ja web-sivujen rakentaminen.",
-  "kuva": "https://esimerkki.fi/kurssikuva.jpg",
-  "opintojakso": {
-    "nimi": "HTML ja CSS perusteet",
-    "tunnus": "WEB101",
-    "opintopisteet": 5
-  },
-  "tekniikat": [
-    {
-      "aihe": "HTML Perusteet",
-      "linkki": "https://www.w3schools.com/html/"
-    },
-    {
-      "aihe": "CSS Perusteet",
-      "linkki": "https://www.w3schools.com/css/"
-    }
+  "otsikko": "JSON-datan käsittelyä",
+  "kuva": "https://jaakkola.github.io/json/digi.JPG",
+  "sisalto": [
+    "low-code",
+    "sisällönhallintajärjestelmät",
+    "resposiivinen käyttöliittymä ja komponentit",
+    "tiedon haku julkisista palveluista rest-rajapinnan yli"
   ],
-  "toteutus": {
-    "toteutuksenNimi": "HTML ja CSS perusteet -toteutus",
-    "alkamisPvm": "13.1.2025",
-    "loppumisPvm": "14.3.2025",
-    "kestoViikoissa": 8,
-    "kuva": "https://example.com/path/to/html-kurssi.jpg",
-    "osallistujat": [
-      { "nimi": "Mikko Lahtinen", "rooli": "Opiskelija" },
-      { "nimi": "Anna Korhonen", "rooli": "Opiskelija" },
-      { "nimi": "Jukka Nieminen", "rooli": "Opiskelija" },
-      { "nimi": "Maria Virtanen", "rooli": "Opiskelija" },
-      { "nimi": "Tommi Järvinen", "rooli": "Opiskelija" }
-    ]
-  }
+  "taulukko": [
+    ["HTML", "CSS", "JavaScript"],
+    ["Node.js", "Express", "MongoDB"]
+  ]
 }
