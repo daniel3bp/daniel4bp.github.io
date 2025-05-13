@@ -39,6 +39,8 @@
 
     <h3>Tekniikat</h3>
     <ul id="tekniikat" class="list-group"></ul>
+
+    <div id="vastaus" class="mt-3 text-danger"></div> <!-- Virheilmoitus -->
   </div>
 
   <!-- Bootstrap JS -->
@@ -47,27 +49,36 @@
   <!-- JSON:n käsittely -->
   <script>
     fetch('tietue.JSON')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('otsikko').textContent = data.otsikko;
-        document.getElementById('kuva').src = data.kuva;
-
-        const sisaltoEl = document.getElementById('sisalto');
-        data.sisalto.forEach(item => {
-          const li = document.createElement('li');
-          li.className = 'list-group-item';
-          li.textContent = item;
-          sisaltoEl.appendChild(li);
-        });
-
-        const tekniikatEl = document.getElementById('tekniikat');
-        data.tekniikat.forEach(item => {
-          const li = document.createElement('li');
-          li.className = 'list-group-item';
-          li.textContent = item;
-          tekniikatEl.appendChild(li);
-        });
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (responseJson) {
+        kerro(responseJson);
+      })
+      .catch(function (error) {
+        document.getElementById("vastaus").innerHTML = "<p>Tietoa ei pystytä hakemaan</p>";
       });
+
+    function kerro(data) {
+      document.getElementById('otsikko').textContent = data.otsikko;
+      document.getElementById('kuva').src = data.kuva;
+
+      const sisaltoEl = document.getElementById('sisalto');
+      data.sisalto.forEach(function(item) {
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.textContent = item;
+        sisaltoEl.appendChild(li);
+      });
+
+      const tekniikatEl = document.getElementById('tekniikat');
+      data.tekniikat.forEach(function(item) {
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.textContent = item;
+        tekniikatEl.appendChild(li);
+      });
+    }
   </script>
 </body>
 </html>
