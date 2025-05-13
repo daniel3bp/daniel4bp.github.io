@@ -12,4 +12,34 @@
     "CSS",
     "JavaScript"
   ]
+{
+  "toteutuksenNimi": "Digitekniikat",
+  "osallistujat": [
+    {
+      "nimi": "Mikko Lahtinen",
+      "rooli": "Opiskelija"
+    },
+    {
+      "nimi": "Anna Korhonen",
+      "rooli": "Opiskelija"
+    },
+    {
+      "nimi": "Jukka Nieminen",
+      "rooli": "Opiskelija"
+    },
+    {
+      "nimi": "Maria Virtanen",
+      "rooli": "Opiskelija"
+    },
+    {
+      "nimi": "Tommi Järvinen",
+      "rooli": "Opiskelija"
+    }
+  ],
+  "alkamisPvm": "13.1.2025",
+  "loppumisPvm": "14.3.2025",
+  "kestoViikoissa": 8,
+  "kuva": "https://example.com/path/to/digitekniikat-image.jpg"
+}
+
 }
