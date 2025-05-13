@@ -1,61 +1,54 @@
 <!DOCTYPE html>
 <html lang="fi">
 <head>
-  <meta charset="UTF-8">
-  <title>JSON-tehtävä</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
-
-  <!-- Oma tyyli -->
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON-datan käsittely</title>
+    <!-- Linkitetään Bootstrap ja oma CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-  <!-- Navigaatio -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="index.html">JSON-tehtävä</a>
+    <div class="container mt-5">
+        <h1>JSON-datan esitys</h1>
+        <div id="vastaus"></div>
     </div>
-  </nav>
 
-  <!-- Sisältö -->
-  <div class="container mt-4">
-    <h1 class="mb-4">Kurssin sisältö</h1>
-    <div id="vastaus">Ladataan tietoja...</div>
-  </div>
+    <script>
+        // Haetaan JSON-tiedosto ja käsitellään se
+        fetch('tietue.JSON')  // Muokkaa polku oikeaksi
+            .then(function(response) {
+                return response.json(); // Muutetaan vastaus JSON-olioksi
+            })
+            .then(function(responseJson) {
+                kerro(responseJson); // Kutsutaan funktiota, joka käsittelee tiedot
+            })
+            .catch(function(error) {
+                document.getElementById("vastaus").innerHTML = "<p>Tietoa ei pystytä hakemaan</p>";
+            });
 
-  <script>
-    fetch('tietue.JSON')
-      .then(response => response.json())
-      .then(data => {
-        let html = `<h2>${data.otsikko}</h2>`;
-        html += `<img src="${data.kuva}" alt="Kuva" class="img-fluid mb-3">`;
+        // Funktio, joka käsittelee JSON-datan ja näyttää sen HTML:ssä
+        function kerro(obj) {
+            let tiedot = "<h1>" + obj.otsikko + "</h1><br>" + obj.kuvaus + "<br><hr>";
+            tiedot += "<p><img src='" + obj.kuva + "' alt='Kurssikuva' style='width: 100%;'></p>";
 
-        html += `<h3>Sisältö</h3><ul>`;
-        data.sisalto.forEach(kohta => {
-          html += `<li>${kohta}</li>`;
-        });
-        html += `</ul>`;
+            // Opintojakson tiedot
+            tiedot += "<h3>Opintojakso</h3>";
+            tiedot += "Nimi: " + obj.opintojakso.nimi + "<br>";
+            tiedot += "Tunnus: " + obj.opintojakso.tunnus + "<br>";
+            tiedot += "Opintopisteet: " + obj.opintojakso.opintopisteet + "<br><hr>";
 
-        html += `<h3>Tekniikkataulukko</h3><table class="table table-bordered"><tbody>`;
-        data.taulukko.forEach(rivi => {
-          html += `<tr>`;
-          rivi.forEach(solu => {
-            html += `<td>${solu}</td>`;
-          });
-          html += `</tr>`;
-        });
-        html += `</tbody></table>`;
+            // Aiheet ja linkit
+            tiedot += "<h3>Aiheet</h3><ul>";
+            for (var i = 0; i < obj.tekniikat.length; i++) {
+                tiedot += "<li><b>Aihe: " + obj.tekniikat[i].aihe + "</b> - ";
+                tiedot += "<a href='" + obj.tekniikat[i].linkki + "'>" + obj.tekniikat[i].linkki + "</a></li>";
+            }
+            tiedot += "</ul>";
 
-        document.getElementById("vastaus").innerHTML = html;
-      })
-      .catch(err => {
-        document.getElementById("vastaus").innerHTML = "<p class='text-danger'>Tietoja ei voitu ladata.</p>";
-      });
-  </script>
-
+            // Näytetään tiedot HTML-sivulla
+            document.getElementById("vastaus").innerHTML = tiedot;
+        }
+    </script>
 </body>
 </html>
