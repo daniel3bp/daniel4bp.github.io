@@ -1,71 +1,44 @@
 <!DOCTYPE html>
 <html lang="fi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toteutus - Digitekniikat</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Toteutus</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
-    <!-- Navigaatio -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <!-- Navigaatio -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Kurssi JSON</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <!-- Linkki index.html:ään -->
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">Etusivu</a>
-                </li>
-                <!-- Linkki toteutus.html:ään -->
-                <li class="nav-item">
-                    <a class="nav-link" href="toteutus.html">Toteutus</a>
-                </li>
-                <!-- Linkki poke.html:ään -->
-                <li class="nav-item">
-                    <a class="nav-link" href="poke.html">Pokemon Haku</a>
-                </li>
-            </ul>
-        </div>
+      <a class="navbar-brand" href="#">Kurssi JSON</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Etusivu</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="toteutus.html">Toteutus</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="poke.html">Pokemon Haku</a>
+          </li>
+        </ul>
+      </div>
     </div>
-</nav>
-    <!-- Sisältö -->
-    <div class="container mt-4">
-        <h1>Toteutus: Digitekniikat</h1>
-        <div id="toteutusTiedot">
-            <!-- JSON-tiedot ladataan tänne -->
-            <p>Ladataan tietoja...</p>
-        </div>
-    </div>
+  </nav>
 
-    <!-- JavaScript, joka lataa JSON-tiedot -->
-    <script>
-        // Haetaan JSON-tiedot ja käsitellään ne
-        fetch('toteutus.json')
-            .then(response => response.json())
-            .then(data => {
-                // Muodostetaan tiedot HTML:ksi ja lisätään ne sivulle
-                document.getElementById("toteutusTiedot").innerHTML = `
-                    <h2>${data.toteutusNimi}</h2>
-                    <p>Osallistujien lukumäärä: ${data.osallistujat.lkm}</p>
-                    <p>Osallistujat: ${data.osallistujat.nimet.join(", ")}</p>
-                    <p>Alkamisaika: ${data.alku}</p>
-                    <p>Loppumisaika: ${data.loppu}</p>
-                    <p>Kesto: ${data.kesto} viikkoa</p>
-                `;
-            })
-            .catch(error => {
-                console.error("Virhe haettaessa tietoja: ", error);
-                document.getElementById("toteutusTiedot").innerHTML = "<p>Tietoa ei pystytä hakemaan.</p>";
-            });
-    </script>
+  <!-- Sisältö -->
+  <div class="container mt-4">
+    <div id="vastaus">Ladataan tietoja...</div>
+  </div>
 
-    <!-- Linkitetään Bootstrapin JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Scriptit -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- JSON-luku ja näytön koodi -->
+  <script>
+    // (JavaScript-koodi tästä kohtaa, ks. ylempää)
+  </script>
 </body>
 </html>
