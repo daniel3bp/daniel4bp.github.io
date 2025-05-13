@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JSON-tietue</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Oma tyylitiedosto -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Navigaatio -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Tietue</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="#">Etusivu</a></li>
+          <li class="nav-item"><a class="nav-link" href="tietue.JSON">JSON-tiedosto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Pääsisältö -->
+  <div class="container mt-5">
+    <h1 id="otsikko"></h1>
+    <img id="kuva" src="" alt="Kuva JSON-datasta" class="img-fluid mb-4" />
+    
+    <h3>Sisältö</h3>
+    <ul id="sisalto" class="list-group mb-4"></ul>
+
+    <h3>Tekniikat</h3>
+    <ul id="tekniikat" class="list-group"></ul>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JSON:n käsittely -->
+  <script>
+    fetch('tietue.JSON')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('otsikko').textContent = data.otsikko;
+        document.getElementById('kuva').src = data.kuva;
+
+        const sisaltoEl = document.getElementById('sisalto');
+        data.sisalto.forEach(item => {
+          const li = document.createElement('li');
+          li.className = 'list-group-item';
+          li.textContent = item;
+          sisaltoEl.appendChild(li);
+        });
+
+        const tekniikatEl = document.getElementById('tekniikat');
+        data.tekniikat.forEach(item => {
+          const li = document.createElement('li');
+          li.className = 'list-group-item';
+          li.textContent = item;
+          tekniikatEl.appendChild(li);
+        });
+      });
+  </script>
+</body>
+</html>
