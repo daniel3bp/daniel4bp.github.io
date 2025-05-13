@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <title>Säätiedot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Bootstrap ja tyylit -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navigaatio -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Etusivu</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="toteutus.html">Toteutus</a></li>
+          <li class="nav-item"><a class="nav-link" href="poke.html">Poke-haku</a></li>
+          <li class="nav-item"><a class="nav-link active" href="saa.html">Sää</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sisältö -->
+  <div class="container">
+    <h1>Helsingin sää</h1>
+    <div id="saaTiedot">Ladataan säätietoja...</div>
+  </div>
+
+  <script>
+    const url = "https://api.openweathermap.org/data/2.5/weather?id=658225&appid=665ecd56dfc08dbb50feb8b8f5034e28&lang=fi&units=metric";
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        const kuvaus = data.weather[0].description;
+        const lampotila = data.main.temp;
+        const tuuli = data.wind.speed;
+        const icon = data.weather[0].icon;
+        const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+
+        document.getElementById("saaTiedot").innerHTML = `
+          <p><strong>Sää:</strong> ${kuvaus}</p>
+          <p><strong>Lämpötila:</strong> ${lampotila} °C</p>
+          <p><strong>Tuulen nopeus:</strong> ${tuuli} m/s</p>
+          <img src="${iconUrl}" alt="Sääikoni">
+        `;
+      })
+      .catch(error => {
+        document.getElementById("saaTiedot").innerHTML = "<p class='text-danger'>Säätietoja ei voitu ladata.</p>";
+      });
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
